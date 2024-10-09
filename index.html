@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tom's epische website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@cloudfour/image-compare/dist/index.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen pt-8 min-h-screen gap-4">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4 text-center">TItle whatever</h1>
+    <p>Some introduciton text</p>
+    <div class="flex items-center justify-center w-screen gap-4">
+        <div id="buttons-left" class="flex flex-col items-center justify-center">
+        </div>
+        <image-compare label-text="Screen Reader Label Text">
+            <img id="img-left" slot="image-1" class="h-[600px]" alt="Alt Text" src="1.jpeg"/>
+            <img id="img-right" slot="image-2" class="h-[600px]" alt="Alt text" src="2.jpeg"/>
+        </image-compare>
+        <div id="buttons-right"  class="flex flex-col items-center justify-center">
+        </div>
+    </div>
+    
+    <footer class="mt-auto">
+        <p>&copy; 2024 My Website</p>
+    </footer>
+
+
+    <script>
+    function setImageSource(elementId, imageId) {
+        // Get the image element by its id
+        var img = document.getElementById("img-" + elementId);
+        
+        // Set the new src attribute
+        if (img) {
+            img.src = imageId + ".jpeg";
+        } else {
+            console.log("Image element not found.");
+        }
+    }
+    const images = {"2020": "1", "2021": "2", "2022": "3", "2023":"4"}
+    for (var cont of ["left", "right"]) {
+        var container = document.getElementById("buttons-" + cont);
+        for(var key in images) {
+            var val = images[key];
+            const button = document.createElement("button");
+            button.innerHTML = key; // Set button text
+            
+            (function(currentCont, currentVal) {
+            button.onclick = function() {
+                console.log(currentCont);
+                setImageSource(currentCont, currentVal);
+            }; // Add a click event to the button
+            })(cont, val);
+
+            // button.classList.add("w-8 h-8");
+            // Append the button to the container
+            container.appendChild(button);
+        }
+    }
+    </script>
+</body>
+</html>
