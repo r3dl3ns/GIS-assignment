@@ -9,56 +9,65 @@
     <script src="https://unpkg.com/@cloudfour/image-compare/dist/index.min.js"></script>
 </head>
 <body class="bg-gray-100 flex flex-col items-center min-h-screen pt-8 min-h-screen gap-4">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4 text-center">TItle whatever</h1>
-    <p>Some introduciton text</p>
+    <h1 class="text-4xl font-bold text-gray-800 mb-4 text-center">Illustrating change at Mount Saint Peter</h1>
+    <p>Mount Saint Peter is the highest 'mountain' in the Netherlands. <br>It lies in the near the city of Maastricht and is next to the Meuse river</br> <p> Mount Saint Peter's limestone composition and its deposits of flint nodules and its geographic makes it a remarkable place <br>The locals have mined for flint there since the stone age!</br><pr>The network of mining tunnels extended over 200 kilometers in the 19th century. <br>These days mining is not taking place at this cite anymore, and it is now considered an important area for recreation (Wikipedia).</br></pr>
+    <p>In the pictures below different height maps of the mount are shown of 3 different periods of time (2002, 2012 and 2019). <br>The height of all points off the mountain are also shown within the three pictures. The legend can be found below the picture.</br><br>The difference between the height can be determined using the slider and selecting the year on each side:</p>
+
     <div class="flex items-center justify-center w-screen gap-4">
-        <div id="buttons-left" class="flex flex-col items-center justify-center">
+        <div id="buttons-left" class="flex flex-col items-center">
         </div>
-        <image-compare label-text="Screen Reader Label Text">
-            <img id="img-left" slot="image-1" class="h-[600px]" alt="Alt Text" src="1.jpeg"/>
-            <img id="img-right" slot="image-2" class="h-[600px]" alt="Alt text" src="2.jpeg"/>
+
+        <image-compare label-text="Screen Reader Label Text" class="flex flex-col items-center">
+            <img id="img-left" slot="image-1" class="h-[600px]" alt="Alt Text" src="1_try.png"/>
+            <img id="img-right" slot="image-2" class="h-[600px]" alt="Alt text" src="2_try.png"/>
         </image-compare>
-        <div id="buttons-right"  class="flex flex-col items-center justify-center">
+
+        <div id="buttons-right" class="flex flex-col items-center">
+            <img id="legend-image" src="LegendAHN.png" class="h-[100px] w-auto mb-2" alt="Legend" />
+            <div class="flex flex-col items-center">
+            </div>
         </div>
     </div>
     
+    <p>In order to see how the mount looks like without elevation data the button 'ClearView' can be selected. <br>This slider helps in illustrating the change at Mount Saint Peter over time making comparison very clear for the viewer.</br></p>
+
+    <p>The data is gathered using the 3 AHN datasets with as a background the 8cm RGB aerial picture from pdok.</p>
+  
+
     <footer class="mt-auto">
-        <p>&copy; 2024 My Website</p>
+        <p>&copy; Tom Snelder (3068145) @University of Twente</p>
     </footer>
 
-
     <script>
-    function setImageSource(elementId, imageId) {
-        // Get the image element by its id
-        var img = document.getElementById("img-" + elementId);
-        
-        // Set the new src attribute
-        if (img) {
-            img.src = imageId + ".jpeg";
-        } else {
-            console.log("Image element not found.");
+        function setImageSource(elementId, imageId) {
+            var img = document.getElementById("img-" + elementId);
+            if (img) {
+                img.src = imageId + ".png";
+            } else {
+                console.log("Image element not found.");
+            }
         }
-    }
-    const images = {"2020": "1", "2021": "2", "2022": "3", "2023":"4"}
-    for (var cont of ["left", "right"]) {
-        var container = document.getElementById("buttons-" + cont);
-        for(var key in images) {
-            var val = images[key];
-            const button = document.createElement("button");
-            button.innerHTML = key; // Set button text
-            
-            (function(currentCont, currentVal) {
-            button.onclick = function() {
-                console.log(currentCont);
-                setImageSource(currentCont, currentVal);
-            }; // Add a click event to the button
-            })(cont, val);
 
-            // button.classList.add("w-8 h-8");
-            // Append the button to the container
-            container.appendChild(button);
+        const images = {"2002": "1_try", "2012": "2_try", "2019": "3_try", "ClearView": "4_try"};
+
+        for (var cont of ["left", "right"]) {
+            var container = document.getElementById("buttons-" + cont);
+            for (var key in images) {
+                var val = images[key];
+                const button = document.createElement("button");
+                button.innerHTML = key;
+                button.classList.add("bg-gray-300", "text-black", "py-2", "px-4", "rounded", "mb-1"); // Styling buttons
+                
+                (function(currentCont, currentVal) {
+                    button.onclick = function() {
+                        console.log(currentCont);
+                        setImageSource(currentCont, currentVal);
+                    };
+                })(cont, val);
+                
+                container.appendChild(button); 
+            }
         }
-    }
     </script>
 </body>
 </html>
